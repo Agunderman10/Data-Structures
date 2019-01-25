@@ -114,7 +114,7 @@ public class Array <T> implements Iterable <T> //supports generics <T>
     	{
     		if(arr[i].equals(obj))
     		{
-    			removeAt(i)
+    			removeAt(i);
     			return true;
     		}
     	}
