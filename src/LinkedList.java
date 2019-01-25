@@ -139,8 +139,30 @@
  *     
  *         head                    tail
  *         7 <-> 0 <-> 4 <-> 9 <-> 15
+ *         ^trav
  *                   
  *         Remove 9 from the Doubly Linked List:
+ *         The basic idea for removing a node from a doubly linked list is the same as removing one from a singly
+ *         linked list, but this time we only need one traverser pointer because each node in a doubly linked list 
+ *         has a reference pointer to the previous node so we don't need to manually keep a reference to it. 
+ *         We start this the same way that we started removing a node from a singly linked list. Add a new traversal
+ *         node that points to the head. This is trav. Just as usual we will advance the traversal pointer until we
+ *         reach the note that we wish to remove, in this case 9. The scenario of us finding it is shown below.
+ *         
+ *         head                    tail
+ *         7 <-> 0 <-> 4 <-> 9 <-> 15
+ *                           ^trav
+ *                           
+ *         We now simply make the node before the one we want to remove point to the node after the one we want to
+ *         remove. So, in other words, 4 should now point at 15. We have to access both 4 and 15 because they are both
+ *         the node we want to remove's next and previous pointers. Next 15's previous node pointer needs to now
+ *         point back at 4, severing the 9 from any connectivity from the rest of the linked list. We can then remove 
+ *         9 from the linked list. The linked list now should look like this.
+ *         
+ *         head              tail
+ *         7 <-> 0 <-> 4 <-> 15
+ *         
+ * 
  * 
  */
 
