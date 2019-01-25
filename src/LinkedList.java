@@ -135,7 +135,7 @@
  *         7 -> 0 -> 4 -> 15
  *              trav1^    ^trav2
  *     
- *     Removing from a Double Linked List:
+ *     Removing from a Doubly Linked List:
  *                   
  * 
  */
