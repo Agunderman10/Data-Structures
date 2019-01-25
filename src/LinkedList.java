@@ -162,6 +162,31 @@
  *         head              tail
  *         7 <-> 0 <-> 4 <-> 15
  *         
+ * Complexity Analysis
+ *     Search:
+ *         Singly Linked List: O(n) linear time in worst case because if the element we are looking for isn't there 
+ *         we have to traverse the entire linked list. 
+ *         Doubly Linked List: O(n) linear time in worst case because if the element we are looking for isn't there
+ *         we have to traverse the entire linked list.
+ *     Insert At Head:
+ *         Singly Linked List: O(1) constant time because we always maintain a pointer for the head in a linked list
+ *         Doubly Linked List: O(1) constant time because we always maintain a pointer for the head in a linked list
+ *     Insert At Tail:
+ *         Singly Linked List: O(1) constant time because we always maintain a pointer for the tail in a linked list
+ *         Doubly Linked List: O(1) constant time because we always maintain a pointer for the tail in a linked list
+ *     Remove At Head:
+ *         Singly Linked List: O(1) constant time because we always maintain a pointer for the head in a linked list
+ *         Doubly Linked List: O(1) constant time because we always maintain a pointer for the head in a linked list
+ *     Remove At Tail:
+ *         Singly Linked List: O(n) linear time because even if we do have a reference to a tail in a singly linked
+ *         list we can remove it but only once. This is because we can't reset the value of what the new tail is. So we
+ *         have to seek to the end of the list to find out what the new tail is.
+ *         Doubly Linked List: O(1) constant time because nodes in a doubly linked list have pointers to the previous
+ *         nodes so we can continuously remove nodes from the tail.
+ *     Remove In Middle:
+ *         Singly Linked List: O(n) linear time because in the worst case we would have to seek through n-1 elements
+ *         Doubly Linked List: O(n) linear time because in the worst case we would have to seek through n-1 elements 
+ *         
  * 
  * 
  */
