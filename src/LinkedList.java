@@ -136,7 +136,11 @@
  *              trav1^    ^trav2
  *     
  *     Removing from a Doubly Linked List:
+ *     
+ *         head                    tail
+ *         7 <-> 0 <-> 4 <-> 9 <-> 15
  *                   
+ *         Remove 9 from the Doubly Linked List:
  * 
  */
 
