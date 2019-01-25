@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 /*
  * What is a Linked List?
  *     A linked list is a sequential list of nodes that hold data which point to other nodes also containing data.
@@ -186,14 +188,249 @@
  *     Remove In Middle:
  *         Singly Linked List: O(n) linear time because in the worst case we would have to seek through n-1 elements
  *         Doubly Linked List: O(n) linear time because in the worst case we would have to seek through n-1 elements 
- *         
- * 
  * 
  */
 
 
 
-public class DoublyLinkedList 
+public class DoublyLinkedList <T> implements Iterable <T>
 {
+	private int size = 0; //keep track of size of linked list
+	private Node<T> head = null; //this is the head node. both head and tail start null becasue linked list is empty
+	private Node<T> tail = null; //this is the tail node
 	
+	//nested node class to represent data
+	private class Node <T>
+	{
+		T data;
+		//previous and next pointers for each node
+		Node<T> prev, next;
+		
+		public Node(T data, Node<T> prev, Node<T> next) 
+		{
+			this.data = data;
+			this.prev = prev;
+			this.next = next;
+		}
+		
+		@Override 
+		public String toString() 
+		{
+			return data.toString();
+		}
+	}
+	
+	//clear this linked list, O(n). goes through all the elements in the linked list and deallocates them all one
+	//at a time. deallocates them by setting them = to null. linear time
+	public void clear() 
+	{
+		//start traverser at the head
+		Node<T> trav = head;
+		
+		//loop until trav is null, meaning until all elements in the list are null
+		while(trav != null)
+		{
+			Node<T> next = trav.next;
+			trav.prev = trav.next = null;
+			trav.data = null;
+			trav = next;
+		}
+		
+		//reset the head and the tail
+		head = tail = trav = null;
+		//reset the size of the linked list
+		size = 0;
+	}
+	
+	//return size of the linked list
+	public int size() 
+	{
+		return size;
+	}
+	
+	//return true if the linked list is empty, false if not
+	public boolean isEmpty()
+	{
+		return size() == 0;
+	}
+	
+	//add an element to the tail of the linked list, O(1) constant time.
+	public void add(T elem) 
+	{
+		addLast(elem);
+	}
+	
+	//add an element to the beginning of the linked list, O(1) constant time
+	public void addFirst(T elem)
+	{
+		//if the linked list is empty
+		if(isEmpty() == true)
+		{
+			//if the list is empty this will be the first element so we set the head and the tail = to the new node
+			//we set the prev and next pointers = to null because we don't have any other nodes in the linked list
+			head = tail = new Node<T> (elem, null, null);
+		}
+		//if the linked list isn't empty
+		else 
+		{
+			//we're adding this to the beginning of the list so the node that was the head should now not be the head
+			//and the new node should be the head
+			head.prev = new Node<T> (elem, null, head);
+			head = head.prev;
+		}
+		
+		//increase size to account for new element
+		size++;
+	}
+	
+	//add a node to the tail of the linked list, O(1) constant time
+	public void addLast(T elem) 
+	{
+		//if the linked list is empty this will be the first element so we set the head and the tail = to the new node
+		//we set the prev and next pointers = to null because we don't have any other nodes in the linked list
+		if(isEmpty() == true)
+		{
+			head = tail = new Node<T> (elem, null, null);
+		}
+		//if the linked list isn't empty
+		else 
+		{
+			//we're adding this to the end of the list so the node that was the tail should now not be the tail and 
+			//should point to the new tail, which is the new node
+			tail.next = new Node<T> (elem, tail, null);
+			tail = tail.next;
+		}
+		
+		//increment size of the linked list to account for the new node
+		size++;
+	}
+	
+	//check the value of the first node if it exists, O(1) constant time
+	public T peekFirst() 
+	{
+		//if the linked list is empty throw runtime exception because you can't look at something if it isn't there
+		if(isEmpty() == true) 
+		{
+			throw new RuntimeException("Empty list");
+		}
+		//if the linked list isn't empty then return the first element
+		else 
+		{
+			return head.data;
+		}
+	}
+	
+	//check the value of the last node if it exists, O(1) constant time
+	public T peekLast()
+	{
+		//if the linked list is empty throw runtime exception because you can't look at somthing if it isn't there
+		if(isEmpty() == true)
+		{
+			throw new RuntimeException("Empty list");
+		}
+		//if the linked list isn't empty then return the last element
+		else 
+		{
+			return tail.data;
+		}
+	}
+	
+	//remove the first value at the head of the linked list, O(1)
+	public T removeFirst()
+	{
+		//if linked list is empty, can't remove data from an empty list
+		if(isEmpty() == true)
+		{
+			throw new RuntimeException("Empty list");
+		}
+		
+		//extract the data at the head and advance the head pointer forward one node
+		T data = head.data;
+		head = head.next;
+		//decrease the size by one to account for removal
+		--size;
+		
+		//if the linked list is now empty after removal set tail = to null
+		if(isEmpty() == true) 
+		{
+			tail = null;
+		}
+		//if the linked list is not empty then do a memory wipe of the previous node that we just removed
+		else 
+		{
+			head.prev = null;
+		}
+		
+		//return the data the was at the first node we just removed
+		return data;
+	}
+	
+	//remove the last value at the tail of the linked list, O(1)
+	public T removeLast() 
+	{
+		//if list is empty, can't remove data from a list that doesn't have data
+		if(isEmpty() == true)
+		{
+			throw new RuntimeException("Empty list");
+		}
+		
+		//extract the data at the tail and advance the tail pointer backwards on node
+		T data = tail.data;
+		tail = tail.prev;
+		//decrement the size of the linked list by one to account for removal
+		--size;
+		
+		//if the list is now empty after removal set head = to null
+		if(isEmpty())
+		{
+			head = null;
+		}
+		//if the linked list is not empty then do a memory wipe of the previous node that we just removed
+		else 
+		{
+			tail.next = null;
+		}
+		
+		//return the data that was at the first node we just removed
+		return data;
+	}
+	
+	//remove an arbitrary node from the linked list, O(1)
+	private T remove(Node<T> node)
+	{
+		//if the note to remove is at the head or the tail we handle those independently
+		if(node.prev == null) 
+		{
+			return removeFirst();
+		}
+		
+		if(node.next == null)
+		{
+			return removeLast();
+		}
+		
+		//make the pointers of adjacent nodes skip over node we're going to remove
+		node.next.prev = node.prev;
+		node.prev.next = node.next;
+		
+		//temporarily store the data we want to return 
+		T data = node.data;
+		
+		//memory wipe to avoid memory leaks
+		node.data = null;
+		node = node.prev = node.next = null;
+		
+		//decrement size by one to account for removal
+		--size;
+		
+		//return the data at the node we just removed
+		return data;
+		
+	}
+	
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
