@@ -458,7 +458,6 @@ public class DoublyLinkedList <T> implements Iterable <T>
 		}
 		
 		return remove(trav);
-		
 	}
 	
 	@Override
