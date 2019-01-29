@@ -557,7 +557,7 @@ public class DoublyLinkedList <T> implements Iterable <T>
 		};
 	}
 	
-	//convert linked list to string
+	//get string representation of our linked list
 	@Override
 	public String toString()
 	{
