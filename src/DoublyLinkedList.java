@@ -495,7 +495,7 @@ public class DoublyLinkedList <T> implements Iterable <T>
 		return false;
 	}
 	
-	//find the index of a particular value in the linked list, O(n)
+	//find the index(not remove) of a particular value in the linked list, O(n)
 	public int indexOf(Object obj)
 	{
 		int index = 0;
