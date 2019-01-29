@@ -526,6 +526,12 @@ public class DoublyLinkedList <T> implements Iterable <T>
 		return -1;
 	}
 	
+	//check if a value is contained within the linked list
+	public boolean contains(Object obj)
+	{
+		return indexOf(obj) != -1;
+	}
+	
 	@Override
 	public Iterator<T> iterator() {
 		// TODO Auto-generated method stub
