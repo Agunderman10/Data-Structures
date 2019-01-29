@@ -428,6 +428,39 @@ public class DoublyLinkedList <T> implements Iterable <T>
 		
 	}
 	
+	//remove a node at a particular index, O(n), linear time
+	public T removeAt(int index) 
+	{
+		//make sure the index provided is valid
+		if(index < 0 || index >= size)
+		{
+			throw new IllegalArgumentException();
+		}
+		
+		int i;
+		Node<T> trav;
+		
+		//search from the front of the list depending if the index is closer to front or back
+		if(index < size/2) 
+		{
+			for(i = 0, trav = head; 1 != index; i++)
+			{
+				trav = trav.next;
+			}
+		}
+		//search from the back of the list depending if the index is closer to front or back
+		else 
+		{
+			for(i = size-1, trav = tail; i != index; i--)
+			{
+				trav = trav.prev;
+			}
+		}
+		
+		return remove(trav);
+		
+	}
+	
 	@Override
 	public Iterator<T> iterator() {
 		// TODO Auto-generated method stub
