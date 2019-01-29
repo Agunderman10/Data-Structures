@@ -491,6 +491,7 @@ public class DoublyLinkedList <T> implements Iterable <T>
 				}
 			}
 		}
+		//if we don't find element return false
 		return false;
 	}
 	
