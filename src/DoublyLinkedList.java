@@ -556,4 +556,21 @@ public class DoublyLinkedList <T> implements Iterable <T>
 			}
 		};
 	}
+	
+	//convert linked list to string
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		Node<T> trav = head;
+		while(trav != null)
+		{
+			sb.append(trav.data + ", ");
+			trav = trav.next;
+		}
+		
+		sb.append(" ]");
+		return sb.toString();
+	}
 }
