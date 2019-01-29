@@ -533,6 +533,7 @@ public class DoublyLinkedList <T> implements Iterable <T>
 		return indexOf(obj) != -1;
 	}
 	
+	//not checking for concurrent modification error, might add later
 	@Override
 	public Iterator<T> iterator() 
 	{
