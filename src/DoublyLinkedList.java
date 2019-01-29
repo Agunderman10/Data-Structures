@@ -523,6 +523,7 @@ public class DoublyLinkedList <T> implements Iterable <T>
 				}
 			}
 		}
+		//return -1 if we don't find the element
 		return -1;
 	}
 	
@@ -533,8 +534,25 @@ public class DoublyLinkedList <T> implements Iterable <T>
 	}
 	
 	@Override
-	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<T> iterator() 
+	{
+		return new Iterator<T> () 
+		{
+			private Node<T> trav = head;
+			
+			@Override
+			public boolean hasNext()
+			{
+				return trav != null;
+			}
+			
+			@Override
+			public T next() 
+			{
+				T data = trav.data;
+				trav = trav.next;
+				return data;
+			}
+		};
 	}
 }
