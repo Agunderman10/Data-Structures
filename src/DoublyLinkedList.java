@@ -460,6 +460,71 @@ public class DoublyLinkedList <T> implements Iterable <T>
 		return remove(trav);
 	}
 	
+	//remove a particular value in the linked list, O(n), linear time
+	public boolean remove(Object obj)
+	{
+		Node<T> trav = head;
+		
+		//support searching for null
+		if(obj == null)
+		{
+			for(trav = head; trav != null; trav = trav.next)
+			{
+				if(trav.data == null)
+				{
+					remove(trav);
+					//return true if we find element
+					return true;
+				}
+			}
+		}
+		//search for non null object
+		else 
+		{
+			for(trav = head; trav != null; trav = trav.next)
+			{
+				if(obj.equals(trav.data))
+				{
+					remove(trav);
+					//return true if we find element
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	//find the index of a particular value in the linked list, O(n)
+	public int indexOf(Object obj)
+	{
+		int index = 0;
+		Node<T> trav = head;
+		
+		//support searching for null
+		if(obj == null)
+		{
+			for(trav = head; trav != null; trav = trav.next, index++)
+			{
+				if(trav.data == null)
+				{
+					return index;
+				}
+			}
+		}
+		//search for non null object
+		else 
+		{
+			for(trav = head; trav != null; trav = trav.next, index++)
+			{
+				if(obj.equals(trav.data))
+				{
+					return index;
+				}
+			}
+		}
+		return -1;
+	}
+	
 	@Override
 	public Iterator<T> iterator() {
 		// TODO Auto-generated method stub
