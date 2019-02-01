@@ -51,7 +51,21 @@
  *     REMEMBER we always operate on the top of the stack. We do not have access to any other item in a stack besides
  *     the top. It is critical to understand this to understand how a stack works.
  *     
+ * When and Where is a Stack Used?
  * 
+ *     Used by undo mechanisms in text editors. 
+ *     
+ *     Used in compiler syntax checking for matching brackets and braces.
+ *     
+ *     Can be used to model a pile of books or other real world items. 
+ *     
+ *     Used behind the scenes to support recursion by keeping track of previous function calls. When a function returns
+ *     it pops the current stack frame off the stack and it rewinds to the next function that's on the stack.
+ *     
+ *     Can be used to do a Depth First Search (DFS) on a Graph. This can be done manually by maintaining your own 
+ *     stack or by using recursion. Both will involve using stacks.
+ *     
+ *     They are also used in browsers to navigate backwards and forwards. 
  * 
  * 
  * 
