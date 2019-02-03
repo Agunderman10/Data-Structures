@@ -67,7 +67,13 @@
  *     
  *     They are also used in browsers to navigate backwards and forwards. 
  * 
- * Complexity Analysis
+ * Complexity Analysis-assuming you implemented the stack using a linked list
+ *     Pushing: O(1) constant time because we have a reference to the top of the stack at all times.
+ *     Popping: O(1) constant time because we have a reference to the top of the stack at all times.
+ *     Peeking: O(1) constant time because we have a reference to the top of the stack at all times.
+ *     Searching: O(n) linear time because the element we are searching for may not be at the top of the stack so at
+ *         worst case we may have to search through the entire stack.
+ *     Size: O(1) constant time because we have to move through the entire stack to find the size.
  *     
  * 
  */
