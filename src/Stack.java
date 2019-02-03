@@ -128,6 +128,7 @@
  * 
  */
 
-public class Stack {
+public class Stack 
+{
 
 }
