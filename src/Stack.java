@@ -125,6 +125,19 @@
  *     bracket. It is, so we remove the left curly bracket '{' from our stack. The next bracket is a round right 
  *     bracket ')'. We check to see if the stack is empty, it is not. Then we check to see if the bracket on the top
  *     of the stack is equal to the reversed brace. It is not. This means that this bracket sequence is invalid.
+ *     
+ * Pseudo code for the algorithm we just went through:
+ *     Let S be a stack.
+ *     
+ *     For bracket in bracket_string:
+ *         rev = getReversedBracket(bracket)
+ *         
+ *         if isLeftBracket(bracket)
+ *             S.push(bracket)
+ *         else if S.isEmpty() or S.pop() != rev
+ *             return false //invalid
+ *             
+ *     return S.isEmpty() //valid if S is empty
  * 
  */
 
