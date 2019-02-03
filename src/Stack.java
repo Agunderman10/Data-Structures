@@ -113,6 +113,18 @@
  *     string. We need to make sure the stack is empty now. Why is that? We do this in case the last few characters 
  *     in the bracket sequence were left brackets in which case they would still be in the stack, but our stack is 
  *     empty so we can conclude that this bracket sequence is valid.
+ *     
+ *     Example 2:
+ *     
+ *     [{})[] -> should be invalid
+ *     
+ *     Solution: We begin this the same as the problem before. We need to push each left bracket onto the stack. Our 
+ *     first element in a left bracket '[' so we push this onto our stack. The next item is a left curly brace '{' so 
+ *     we push it on the stack as well. Our next item is a right curly brace '}'. Like the problem before we check if
+ *     the stack is empty first. It is not. Ergo, we check to see if the top of the stack is equal to the reversed 
+ *     bracket. It is, so we remove the left curly bracket '{' from our stack. The next bracket is a round right 
+ *     bracket ')'. We check to see if the stack is empty, it is not. Then we check to see if the bracket on the top
+ *     of the stack is equal to the reversed brace. It is not. This means that this bracket sequence is invalid.
  * 
  */
 
