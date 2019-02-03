@@ -75,6 +75,44 @@
  *         worst case we may have to search through the entire stack.
  *     Size: O(1) constant time because we have to move through the entire stack to find the size.
  *     
+ * Example Problem - Brackets
+ *     Problem: given a string made up of the following brackets: ()[]{}, determine if the brackets properly match.
+ *     Examples of what I mean are shown below:
+ *     
+ *     [{}] -> valid
+ *     (()) -> valid
+ *     {] -> invalid
+ *     [()]))() -> invalid
+ *     []{}({}) -> valid
+ *     
+ *     Example 1:
+ *     
+ *     [[{}]()] -> should be valid
+ *     
+ *     Solution: for every left bracket we encounter we should push those onto the stack. So when we begin, reading
+ *     left to right, we push the first left [ bracket onto the stack. Same goes for the next. So our current stack
+ *     so far is shown below.
+ *     
+ *     [ -> this is our current top
+ *     [
+ *     
+ *     We continue and push the { onto the stack. Next we traverse to the next element. This element is a right square
+ *     bracket, '}'. So we have encountered a right square bracket now we need to do two checks. First, we need to
+ *     check if the stack is empty. If so then the operation is invalid because then the brackets would not be matched.
+ *     But, if there are still items in the stack then we pop the top element and check if its value is equal to the
+ *     reversed current bracket. For this example the top bracket is equal to the reversed bracket because we have 
+ *     {} so we can remove the brackets from the stack. Next we have a right square bracket. Once again, we check if
+ *     the stack is empty. In this case, no it isn't. Next we check if the top element of the stack is equal to the 
+ *     reversed bracket. Yes it is because we have []. We can remove the []. Now our stack is a single '['. Next, we 
+ *     move onto the next element in our bracket sequence. It is a round left bracket '('. We push it onto the stack.
+ *     Then we move onto the next bracket. It is a round right bracket ')'. Because it is a right bracket we check if
+ *     the list is empty. It is not. Now we check if the top element of the stack '(' equal to the reversed bracket.
+ *     It is. So we can remove the ( from the stack. Now, all we are left with is a right bracket ']'. We check if the
+ *     stack is empty, no it is not because we have our '['. Then we check if the top element of the stack is equal
+ *     to the reversed bracket. Yes, it is. Now we can remove our [ from the stack and we are done processing the 
+ *     string. We need to make sure the stack is empty now. Why is that? We do this in case the last few characters 
+ *     in the bracket sequence were left brackets in which case they would still be in the stack, but our stack is 
+ *     empty so we can conclude that this bracket sequence is valid.
  * 
  */
 
