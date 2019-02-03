@@ -138,6 +138,9 @@
  *             return false //invalid
  *             
  *     return S.isEmpty() //valid if S is empty
+ *     
+ * The idea of the stack is also implemented in the game the 'Tower of Hanoi.'
+ *     
  * 
  */
 
