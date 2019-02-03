@@ -130,11 +130,11 @@
  *     Let S be a stack.
  *     
  *     For bracket in bracket_string:
- *         rev = getReversedBracket(bracket)
+ *         reversedBracket = getReversedBracket(bracket)
  *         
  *         if isLeftBracket(bracket)
  *             S.push(bracket)
- *         else if S.isEmpty() or S.pop() != rev
+ *         else if S.isEmpty() or S.pop() != reversedBracket
  *             return false //invalid
  *             
  *     return S.isEmpty() //valid if S is empty
