@@ -141,7 +141,52 @@
  *     
  * The idea of the stack is also implemented in the game the 'Tower of Hanoi.'
  *     
- * 
+ * One way of implementing a stack, pushing and popping:
+ *   
+ *     Stacks are often implemented using arrays, singly linked lists, or sometimes doubly linked lists.
+ *     
+ *     To begin with we need a starting point, so we point the head to a null node. This means that the stack is 
+ *     initially empty. The trick to creating a stack using a singly linked list is to insert the new elements before
+ *     the head and not at the tail of the list. This way we have pointers pointing in the correct direction when
+ *     we want to pop an element off the stack. Here is our empty stack.
+ *     
+ *     Null <- head
+ *     
+ *     Lets say we want to push 4 onto the stack. We create a new node to be the new head and place it in the head of
+ *     the stack. Here is our new stack.
+ *     
+ *     4 <- head
+ *     Null
+ *     
+ *     We can continue this process, pushing 2, 5, and 13 onto our stack. Here is our new stack
+ *     
+ *     13 <- head
+ *     5
+ *     2
+ *     4
+ *     Null
+ *     
+ *     Now for popping items off of the stack. This is rather simple as well. We simply move the head to the next
+ *     node and deallocate the previous head so it can be collected by the garbage collector later. Note, if you
+ *     are using a language without a garbage collector(C || C++) you will need to explicitly deallocate your memory
+ *     here. If you do not, you WILL get memory leaks. So - using our current stack above, assume we want to pop an 
+ *     element off of our stack. As described, we move the new head to the 5, and deallocate the 13. Our new stack 
+ *     is shown below.
+ *     
+ *     Null
+ *     5 <- head
+ *     2
+ *     4
+ *     Null
+ *     
+ *     If we want to pop the next element it will look like this:
+ *     
+ *     Null
+ *     2 <- head
+ *     4
+ *     Null
+ *     
+ *     If we continue popping elements the stack will, of course, be empty when we pop all of its elements. 
  */
 
 public class Stack 
