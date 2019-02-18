@@ -52,7 +52,16 @@
  *     
  *     Breadth first search (BFS) graph traversal.
  *     
+ * Complexity Analysis
  *     
+ *     Enqueue: O(1) constant time.
+ *     Dequeue: O(1) constant time.
+ *     Peeking: O(1) constant time.
+ *     Contains: O(n) linear time since we potentially have to search through every element of the queue.
+ *     Removal: O(n) linear time. This is not in the sense of dequeuing or polling, but in actually removing the element
+ *     from the queue internally. This is linear time because we would potentially have to search through all of the 
+ *     elements in the queue to find the element we want to remove. 
+ *     IsEmpty: O(1) constant time.
  *     
  */
 
