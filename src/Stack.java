@@ -189,7 +189,69 @@
  *     If we continue popping elements the stack will, of course, be empty when we pop all of its elements. 
  */
 
-public class Stack 
+//implementation for a very simple stack implemented with a doubly linked list
+public class Stack<T> implements Iterable<T>
 {
-
+	//doubly linked list built into java
+	private java.util.LinkedList<T> list = new java.util.LinkedList<T>();
+	
+	//create empty stack
+	public Stack() { }
+	
+	//create a stack with an initial element
+	public Stack(T firstElem) 
+	{
+		push(firstElem);
+	}
+	
+	//return the number of elements in the stack
+	public int size()
+	{
+		//return size of the underlying linked list
+		return list.size();
+	}
+	
+	//check if stack is empty
+	public boolean isEmpty()
+	{
+		//if size = 0 then return true, else false
+		return size() == 0;
+	}
+	
+	//push an element onto the stack
+	public void push(T elem) 
+	{
+		//we only have access to the last element in a stack so we add to last
+		list.addLast(elem);
+	}
+	
+	//pop an element off of the stack
+	public T pop() 
+	{
+		//throw error if stack is empty
+		if(isEmpty())
+		{
+			throw new java.util.EmptyStackException();
+		}
+		return list.removeLast();
+	}
+	
+	//peek top of the stack without removing an element
+	public T peek()
+	{
+		//throw exception if stack is empty
+		if(isEmpty())
+		{
+			throw new java.util.EmptyStackException();
+		}
+		return list.peekLast();
+	}
+	
+	//allows user to iterate through the stack using an iterator
+	@Override
+	public java.util.Iterator<T> iterator() 
+	{
+		return list.iterator();
+	}
+	
 }
