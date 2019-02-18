@@ -63,6 +63,25 @@
  *     elements in the queue to find the element we want to remove. 
  *     IsEmpty: O(1) constant time.
  *     
+ * Breadth First Search with a Queue explanation:
+ *  
+ *     The Breadth First Search is performed on a graph by starting at a node and traversing the entire graph, first by
+ *     visiting all of the neighbors of the starting node, and then visiting all of their neighbors. When talking
+ *     about a graph we are talking about a network such as shown below, not like a bar or line graph.
+ *     
+ *     4--5--3
+ *     |           10
+ *     2--7
+ *     |
+ *     0--2--8    9--2
+ *            \   |
+ *             9--89
+ *             
+ *     Assume we start at 3. We search all of the nodes connected to 3, this is only the 5. Then we search the nodes
+ *     connected to 5, only 4. Then we search 4's neighbors, only 2. Then we search 2's neighbors, this is 7 and 0.
+ *     We continue in this pattern, visiting all of the neighbors of each node. Notice the 10. The 10 is not connected
+ *     to the graph and so we cannot visit its node with the Breadth First Search. 
+ *     
  */
 
 public class Queue 
