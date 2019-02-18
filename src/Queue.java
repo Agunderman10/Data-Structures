@@ -82,6 +82,22 @@
  *     We continue in this pattern, visiting all of the neighbors of each node. Notice the 10. The 10 is not connected
  *     to the graph and so we cannot visit its node with the Breadth First Search. 
  *     
+ * Psuedo code for implementing a Breadth First Search with a queue:
+ * 
+ *     Let Q be a Queue
+ *     Q.enqueue(starting_node)
+ *     starting_node.visited = true
+ *     
+ *     //while our queue is not empty we dequeue an element 
+ *     while Q is not empty Do
+ *         node = Q.dequeue()
+ *         
+ *         //for every neighbor that has not been visited yet we enqueue
+ *         For neighbor in neighbors(node):
+ *             if neighbor has not been visited:
+ *                 neighbor.visited = true
+ *                 Q.enqueue(neighbor)
+ *     
  */
 
 public class Queue 
