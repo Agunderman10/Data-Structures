@@ -37,9 +37,32 @@
  *     Then we want to enqueue 7. We enqueue this on the back of the queue as such:
  *     
  *     33 17 11 12 7
+ *     
+ * When and where is a queue used?
+ * 
+ *     Any waiting line models a queue, such as a line for food at McDonalds.
+ *     
+ *     Can be used to efficiently keep track of the x most recently added elements to something.
+ *     
+ *     Web server request management where you want first come first serve. Suppose you have a web server that's idly
+ *     waiting for requests from people to use your website and you can only process 5 requests at a time. 12 requests
+ *     come in so you process the first 5 and the other 7 requests wait in a queue to be processed. Whenever you finish
+ *     processing a request you dequeue the next request and you keep doing this until your queue is empty, aka when 
+ *     all of the requests have been processed.
+ *     
+ *     Breadth first search (BFS) graph traversal.
+ *     
+ *     
+ *     
  */
 
 public class Queue 
 {
 
 }
+
+
+
+
+
+
