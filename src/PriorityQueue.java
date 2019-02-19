@@ -32,9 +32,67 @@
  *     the numbers visually, but fundamentally how does the machine do it? Does it sort all of the elements inside of 
  *     the Priority Queue before polling? No, in fact that would be highly ineffective. Instead, it uses what is called
  *     a heap.
+ *     
+ * What is a heap?
+ * 
+ *     A heap is a tree based data structure that satisfies the heap invariant(also called heap property): If A is a 
+ *     parent of B then A is ordered with respect to B for all nodes A, B in the heap. What this means is that in a 
+ *     heap, the value of the parent node is always greater than or equal to the value of the child node for all nodes.
+ *     Or the other way around, that the parent node is always less than or equal to the value of the child node for all
+ *     nodes in the heap. This means that we end up getting two types of heaps, Max Heaps and Min Heaps. Both of the 
+ *     following are actually binary heaps, meaning that every node has exactly two children, the nodes that you 
+ *     cannot see are null values I have not yet drawn in. Min Heaps are often seen in binomial heaps. Also note that
+ *     not all heaps are binary heaps, they can have any number of branches.
+ *     
+ *        8                     0
+ *       / \                   / \
+ *      7   6                 2   3
+ *     / \  |                /\   /\
+ *    3   2 5               4  5  6 4
+ *    Max Heap               Min Heap
+ *    
+ *    Remember, if a tree violates the heap invariant then it is NOT a heap. Also note, if a structure contains a 
+ *    cycle(where nodes form a cycle by pointing at one another) it is not a tree and therefore NOT a heap.
+ *    
+ * Why Are We Interested In Heaps?
+ * 
+ *     Heaps form the underlying data structure for priority queues. Sometimes, people even refer to priority queues
+ *     as heaps, although this isn't technically correct since again the priority queue is an abstract data type 
+ *     meaning it can be implemented with other data structures also. 
+ *     
+ * When and Where is a Priority Queue used?
+ * 
+ *     Used in certain implementations of Dijkstra's Shortest Path Algorithm to fetch the next node we want to explore.
+ *     
+ *     Any time you need to dynamically fetch the 'next best' or 'next worst' element.
+ *     
+ *     Used in Huffman coding (which is often used for loss-less data compression).
+ *     
+ *     Best First Seach(BFS) algorithms such as A* use Priority Queues to continuously grab the next most promising
+ *     node in the graph as it's being traversed.
+ *     
+ *     Used by Minimum Spanning Tree(MST) algorithms.
+ * 
  */
 
 public class PriorityQueue 
 {
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
