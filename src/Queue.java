@@ -97,6 +97,33 @@
  *             if neighbor has not been visited:
  *                 neighbor.visited = true
  *                 Q.enqueue(neighbor)
+ *                 
+ * Implementation details for Queues:
+ * 
+ *     Queues can be implemented in multiple ways, but the most popular ways are to use either arrays, singly linked 
+ *     lists, or doubly linked lists. If you're using an array you have to make sure your array is going to be big
+ *     enough, if it's a static array. If it's a dynamic array you should be fine.
+ *     
+ *     This implementation example will be executed with a singly linked list, but the actual code implementation will
+ *     be done with a doubly linked list. 
+ *     
+ *     Firstly, in a queue we will always have a head and a tail pointer. If our queue is empty or has one element in
+ *     it both the tail and head pointers will point at the same element as shown below. Initially they are both null.
+ *     
+ *     Null <- head
+ *     ^tail
+ *     
+ *     As we enqueue more elements we are pushing the tail elements forward so we're enqueueing a new node and making
+ *     the tail pointer move to the next element. If we enqueue 5, 1, 6, 17, and 8 then our new queue will look like
+ *     this. Notice the placement of the head and tail pointers on the ends of the queue.
+ *     
+ *     5 -> 1 -> 6 -> 17 -> 8 -> Null
+ *     ^head                ^tail
+ *     
+ *     As we dequeue we instead will be pushing the head forward. If we want to dequeue two elements then we will move
+ *     the head pointer forward two elements. We set the current node = to Null so it can be picked up by the garbage
+ *     collector and advance the head pointer. Remember, if you are in another programming language that requires 
+ *     you to manage your own memory (C/C++) you must delete the nodes manually or you may cause memory leaks. 
  *     
  */
 
