@@ -68,7 +68,7 @@
  *     
  *     Used in Huffman coding (which is often used for loss-less data compression).
  *     
- *     Best First Seach(BFS) algorithms such as A* use Priority Queues to continuously grab the next most promising
+ *     Best First Search(BFS) algorithms such as A* use Priority Queues to continuously grab the next most promising
  *     node in the graph as it's being traversed.
  *     
  *     Used by Minimum Spanning Tree(MST) algorithms.
