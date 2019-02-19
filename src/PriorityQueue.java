@@ -73,6 +73,19 @@
  *     
  *     Used by Minimum Spanning Tree(MST) algorithms.
  * 
+ * Complexity Analysis for Priority Queue with Binary Heap
+ * 
+ *     Binary Heap construction: O(n) linear time.
+ *     Polling: O(log(n)) logarithmic time because we possible have to re-shuffle the heap to satisfy the heap invariant.
+ *     Peeking: O(1) constant time.
+ *     Adding: O(log(n)) logarithmic time because we possibly have to re-shuffle the heap to satisfy the heap invariant.
+ *     Naive Removing: O(n) linear time. Removing an element that is not the root element. We potentially have to scan
+ *     all of the elements in the PQ.
+ *     Advanced Removing with help from a Hash Table: O(log(n)) logarithmic time. Using a hash table to help optimize
+ *     this operation does take up linear space and also adds some overhead to the binary heap implementation.
+ *     Naive contains: O(n) linear time.
+ *     Contains check with help of a Hash Table: O(1) constant time. Using a hash table to optimize this operation does
+ *     take up linear space and also adds some overhead to the binary heap implementation.
  */
 
 public class PriorityQueue 
