@@ -118,6 +118,24 @@
  *     The -13 is obviously the smallest of these numbers so we remove the -13, then the -11, then the -7, and so on
  *     and so forth. Remember we negate all of these numbers after we remove them so our end result is 13, 11, 7, 5, 3,
  *     and 2 in that order. Remember this will only work with numbers. 
+ *     
+ * Turning Min PQ into Max PQ with Strings 
+ * 
+ *     Suppose lex is a comparator for strings which sorts strings in lexicographic order(the default in most 
+ *     programming languages). Then let nlex be the negation, or inverse, of lex, and also let S1 and S2 be some
+ *     non-null strings. Lexicographic order simply means alphabetical/lexical order.
+ *     
+ *     lex(S1, S2) = -1 if S1 < S2 lexicographically
+ *     
+ *     lex(S1, S2) = 0 if S1 = S2 lexicographically
+ *     
+ *     lex(S1, S2) = +1 if S1 > S2 lexicographically
+ *     
+ *     nlex(S1, S2) = -(-1) = +1 if S1 < S2 lexicographically
+ *     
+ *     nlex(S1, S2) = -(0) = 0 if S1 = S2 lexicographically
+ *     
+ *     nlex(S1, S2) = -(+1) = -1 if S1 > S2 lexicographically
  */
 
 public class PriorityQueue 
