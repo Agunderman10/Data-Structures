@@ -94,6 +94,30 @@
  *     
  *     Since elements in a priority queue are comparable they implement some sort of comparable interface which we can 
  *     simply negate, or invert, to achieve a Max heap.
+ *     
+ *     Let x and y be numbers in the priority queue. For a Min Priority Queue, if x <= y then x comes out before y, so
+ *     the negation of this is if x >= y then y comes out before x. As a result of this negation, if we want to remove
+ *     elements from a negated Priority Queue then we would remove the largest numbers. To demonstrate this, imagine we 
+ *     have the following Priority Queue.
+ *     
+ *     2 13 3 5 11 7
+ *     
+ *     Note, it is a Priority Queue in which we have negated, or reversed the comparator. We will now remove the 
+ *     elements according to the negated comparator. We remove according to the largest number now because it is a 
+ *     negated Priority Queue. As a result, we grab the 13, then the 11, then the 7, and so on.
+ *     
+ *     An alternative method for numbers is to negate the numbers as you insert them into the PQ and negate them again
+ *     when they are taken out. This has the same effect as negating the comparator. Let's see how this works. Assume
+ *     we have the following numbers.
+ *     
+ *     2, 3, 5, 7, 11, 13
+ *     
+ *     We need to negate them, so we make reverse all of them to their opposite, or, in this case, negative format. 
+ *     Our numbers are now -2, -3, -5, -7, -11, and -13. Now we continue as we would if we wanted to remove all of the
+ *     numbers in a regular non-negated Priority Queue. We remove the smallest number until there are no numbers left. 
+ *     The -13 is obviously the smallest of these numbers so we remove the -13, then the -11, then the -7, and so on
+ *     and so forth. Remember we negate all of these numbers after we remove them so our end result is 13, 11, 7, 5, 3,
+ *     and 2 in that order. Remember this will only work with numbers. 
  */
 
 public class PriorityQueue 
