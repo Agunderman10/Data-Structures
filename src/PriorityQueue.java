@@ -136,6 +136,18 @@
  *     nlex(S1, S2) = -(0) = 0 if S1 = S2 lexicographically
  *     
  *     nlex(S1, S2) = -(+1) = -1 if S1 > S2 lexicographically
+ *     
+ *     Using nlex instead of lex would effectively turn a Min Heap into a Max Heap. Let's look at an example.
+ *     
+ *     Assume we have the string values XX, FZ, A, B, X, and XR. By adding all of these strings to the Priority Queue 
+ *     with the lex comparator we expect to get the order in the following:
+ *     
+ *     A, B, FZ, X, XR, XX
+ *     
+ *     Now let's do the same thing with nlex. By doing this we should obtain the opposite sequence from the lex 
+ *     sequence. We should obtain that order in the following:
+ *     
+ *     XX, XR, X, FZ, B, A
  */
 
 public class PriorityQueue 
