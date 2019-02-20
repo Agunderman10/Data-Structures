@@ -86,6 +86,14 @@
  *     Naive contains: O(n) linear time.
  *     Contains check with help of a Hash Table: O(1) constant time. Using a hash table to optimize this operation does
  *     take up linear space and also adds some overhead to the binary heap implementation.
+ *     
+ * Turning Min PQ into Max PQ
+ *     
+ *     Problem: Often the standard library of most programming languages only provide a Min PQ which sorts by smallest
+ *     elements first, but sometimes we need a Max PQ.
+ *     
+ *     Since elements in a priority queue are comparable they implement some sort of comparable interface which we can 
+ *     simply negate, or invert, to achieve a Max heap.
  */
 
 public class PriorityQueue 
