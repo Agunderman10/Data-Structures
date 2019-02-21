@@ -148,6 +148,88 @@
  *     sequence. We should obtain that order in the following:
  *     
  *     XX, XR, X, FZ, B, A
+ *     
+ * Adding Elements to a Binary Heap
+ * 
+ *     Ways of Implementing a Priority Queue: A very popular way to implement a Priority Queue is to use some kind of 
+ *     heap because this gives them the best possible time complexity for the operations we want to complete. The 
+ *     Priority Queue is an Abstract Data Type(ADT) hence heaps are not the only way to implement PQs. As an example, 
+ *     we could use an unsorted list, but this would not give us the best possible time complexity. 
+ *     
+ *     Remember, a Priority Queue is NOT a heap.
+ *     
+ *     There are many types of heaps that we could use to implement a PQ including:
+ *     
+ *     Binary Heaps
+ *     Fibonacci Heaps
+ *     Binomial Heaps
+ *     Pairing Heaps
+ *     
+ *     For simplicity, we are going to use a Binary Heap. 
+ *     
+ * Priority Queue with Binary Heap
+ * 
+ *     A binary heap is a binary tree that supports the heap invariant. In a binary tree every node has exactly two 
+ *     children. We went over the heap invariant and what binary trees look like above. A Complete Binary Tree is a 
+ *     tree in which at every level, except possibly the last is completely filled and all the nodes are as far left
+ *     as possible. Maintaining a complete binary tree is very, very important because it gives us an insertion point
+ *     no matter what the tree looks like, or what values are in it. 
+ *     
+ *     We need to understand how to represent one of these binary heaps, and there is a canonical way of doing this,
+ *     and that is to use an array. Using an array is a convenient way of doing this because when we are maintaining
+ *     this complete binary tree property the insertion position is simply the last index in the array. This is not
+ *     the only way we can represent the heap, we can also represent the heap using objects and pointers and 
+ *     recursively adding and removing nodes as needed, but the array construction is very elegant and also very, very
+ *     fast. Below I have the array indexes lined up with the tree values to help you visualize what I'm talking about
+ *     here. Below is tree visuals and the array visuals. 
+ *     
+ *         Representing Binary Heaps with an Array
+ *         
+ *         |9|8|7|6|5|1|2|2|2|3|4 |0 |1 |2 |1 | tree values
+ *         ------------------------------------
+ *         |0|1|2|3|4|5|6|7|8|9|10|11|12|13|14| array indexes
+ *         
+ *         Index Tree                                        Actual Heap
+ *              0                                                9   
+ *             / \                                              / \
+ *            /   \                                            /   \
+ *           1      2--\                                      8     7--\
+ *          / \    /    \                                    / \   /    \
+ *        3   4    5     6                                 6   5   1     2
+ *       / \ / \  / \   /  \                             / \  / \ / \   / \ 
+ *      7  8 9 10 11 12 13 14                            2  2 3 4 0 1   2 1
+ *      
+ *      Heap values are very convenient to access when using an array. For example:
+ *      
+ *      Let i be the parent node index
+ *      
+ *      Left child index = 2i + 1
+ *      Right child index = 2i + 2
+ *      (zero based array, if it was one based then you could just subtract one)
+ *            
+ *      Using this, we can tell how easy it is to find the child nodes of any parent in the heap. 
+ *      Seeing this put into use let's say we have index 2(value 7). The left child is 1. If we want to find this with
+ *      our formula it would be 2i + 1 or 2(2) + 1, which is index 5, or number 7 on the tree. 
+ *      
+ * Adding Elements to Binary Heap
+ * 
+ *     Now we want to know, how do I add nodes to the Binary Heap AND maintain the heap invariant, because without 
+ *     the heap invariant the binary heap is useless. Let's say we want to insert a 1 to the binary heap below. A 1 
+ *     should be at the root, since we are dealing with a Min Heap, but instead of inserting 1 at the root of the heap
+ *     directly what we do is we put 1 at the bottom left of the tree in the insertion position we mentioned earlier.
+ *     We then perform what's called "bubbling up". This is sometimes called swimming or even sifting up. So, we insert
+ *     our 1 as shown below, in the insertion position. Now we find that we are in violation of the heap invariant, 
+ *     because the 1 is the smallest element and it is at the bottom of the Min Heap. So what do we do?
+ *     
+ *                5
+ *               / \
+ *              6   12
+ *             / \  / \
+ *            8  1
+ *            
+ *     What we do is we swap 1 and 6, but now we are still in violation of the heap invariant because 6 is greater than
+ *     1 and we find that 1 is a child of 5. So what do we do? You guessed it! We swap them again. Now our 1 is the
+ *     root of our tree and the heap invariant has been maintained successfully. 
  */
 
 public class PriorityQueue 
