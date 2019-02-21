@@ -230,6 +230,30 @@
  *     What we do is we swap 1 and 6, but now we are still in violation of the heap invariant because 6 is greater than
  *     1 and we find that 1 is a child of 5. So what do we do? You guessed it! We swap them again. Now our 1 is the
  *     root of our tree and the heap invariant has been maintained successfully. 
+ *     
+ *     Now we have the number 13 that we want to insert. Once again, we put 13 into the insertion position as shown 
+ *     below. Remember the insertion position is the bottom left most spot on the tree. 
+ *     
+ *                1
+ *               / \
+ *              5   12
+ *             / \  / \
+ *            8  6 13
+ *     
+ *     We check to see if the 13 needs to bubble up at all and we find that it doesn't because its parent node is 
+ *     smaller. We now want to insert 4 into the heap. We put it into the insertion position. Can you find where it 
+ *     goes? We add 4 as the right child to the 12 node. Then, because this is a Min Heap we can see that the Heap
+ *     invariant is not satisfied. We bubble up the 4 and switch the 4 and 12. Now, the heap invariant is restored.
+ *     The correct heap is below.
+ *     
+ *                1
+ *               / \
+ *              5   12
+ *             / \  / \
+ *            8  6 13  4
+ *            
+ *     Remember, maintaining a Complete Binary Tree is very important for maintaining an insertion point. 
+ *     
  */
 
 public class PriorityQueue 
