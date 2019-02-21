@@ -327,7 +327,11 @@
  *              6   12
  *             / \  / \
  *            8  13 
- *            
+ *         
+ * Time Complexity for Removing Elements from a Binary Heap
+ * 
+ *     Polling - O(log(n)) logarithmic time since we're removing the root and we already know where to find it.
+ *     Removing - O(n) linear time since we have to find the index of that node to remove before removing it.
  */
 
 public class PriorityQueue 
