@@ -332,6 +332,50 @@
  * 
  *     Polling - O(log(n)) logarithmic time since we're removing the root and we already know where to find it.
  *     Removing - O(n) linear time since we have to find the index of that node to remove before removing it.
+ *     
+ * Removing Elements from Binary Heap in O(log(n))
+ * 
+ *     The inefficientcy of the removal algorithm comes from the fact that we have to perform a linear search to find
+ *     out where an element is indexed at. What if instead we did a lookup using a Hashtable to find out where a node
+ *     is indexed at?
+ *     
+ *     A hashtable provides a constant time lookup and update for mapping from a key(the node value) to a value(the 
+ *     index).
+ *     
+ *     Caveat: what if there are two or more nodes with the same value? What problems would that cause?
+ *     Dealing with this multiple value problem: Instead of mapping one value to one position we will map one value to 
+ *     multiple positions. We can maintain a Set or Tree Set of indexes for which a particular node value(key) maps to.
+ *     
+ *     Note that in our heap below we have multiple duplicate variables. We have 3 2s, and 2 7s.
+ *     
+ *               OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                 0,2,6       |           2                          0
+ *     |     7                  1,4        |          / \                        / \ 
+ *     |     11                  3         |         7   2                      1   2
+ *     |     13                  5         |        / \ / \                    / \ / \ 
+ *                                                 11 7 13 2                  3  4 5  6
+ *                                                 
+ *     The Hash Table is how we are going to keep track of the values of the indexes for the elements(their positions).
+ *     If nodes start moving in the tree we also need to keep track of that. For example, if a Bubble Up or Bubble
+ *     Down occurs, we need to keep track of that and where the swaps go to so we can update them in the map. 
+ *     Let's say for example that we wish to swap 7 and 13. If we switch those values in our heap, then we also need
+ *     to switch them in the hash table so we know where they are. Observe the changes below.
+ *     
+ *               OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                 0,2,6       |           2                          0
+ *     |     7                  1,5        |          / \                        / \ 
+ *     |     11                  3         |         7   2                      1   2
+ *     |     13                  4         |        / \ / \                    / \ / \ 
+ *                                                 11 13 7 2                  3  4 5  6
+ *                                                 
+ *     Notice the Position values in the map change as the positions in the heap change. 
+ *     
+ *     Question: If we want to remove a repeated node in our heap, which node do we remove and does it matter which one
+ *     we pick? 
+ *     
+ *     Answer: No, it doesn't matter which node we remove as long as we satisfy the heap invariant in the end. 
  */
 
 public class PriorityQueue 
