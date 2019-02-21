@@ -376,6 +376,34 @@
  *     we pick? 
  *     
  *     Answer: No, it doesn't matter which node we remove as long as we satisfy the heap invariant in the end. 
+ * 
+ * Manipulating a Binary Heap with Hash Table
+ * 
+ *               OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                 0,2,6       |           2                          0
+ *     |     7                  1,4        |          / \                        / \ 
+ *     |     11                  3         |         7   2                      1   2
+ *     |     13                  5         |        / \ / \                    / \ / \ 
+ *                                                 11 7 13 2                  3  4 5  6
+ *                                                 
+ *     Above is the information for our binary heap. We have all of our values stored in a hash table and the heap
+ *     is also shown. If we want to insert 3, what do we do? Firstly, just like before, we add the new node into the 
+ *     insertion position in the bottom left of our Heap. We also need to add the new node to our hash table so we can
+ *     track it. This is all shown below. Take note of all of the changes. 
+ *     
+ *               OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                 0,2,6       |           2                          0
+ *     |     7                  1,4        |          / \                        / \ 
+ *     |     11                  3         |         7   2                      1   2
+ *     |     13                  5         |        / \ / \                    / \ / \ 
+ *     |     3                   7         |       11 7 13 2                  3  4 5  6
+ *                                                /                          /
+ *                                               3                          7
+ *                                               
+ *     Now that the 3 is inserted, we need to make sure that the heap invariant is satisfied. Notice that we are 
+ *     dealing with a Min Heap. 
  */
 
 public class PriorityQueue 
