@@ -254,6 +254,80 @@
  *            
  *     Remember, maintaining a Complete Binary Tree is very important for maintaining an insertion point. 
  *     
+ * Removing Elements from a Binary Heap
+ * 
+ *     In a Binary Heap, we always want to remove from the root node because it is the node of interest. It is the 
+ *     node with the largest priority in a Max or Min heap because the largest or smallest value will be stored here.
+ *     When we remove the root we call it polling. The special thing about the root is that we don't need to search for
+ *     its index because in an array implementation it has index 0.
+ * 
+ *     Imagine we have the following Min Heap:
+ *     
+ *                1
+ *               / \
+ *              5   12
+ *             / \  / \
+ *            8  6 13  7
+ *            
+ *     When we call the poll() method, we want to remove the root. So how do we do this? Remember, we have the
+ *     insertion point. The insertion point also happens to be the same place that we will be removing elements from.
+ *     When polling, what we need to do is swap the root and the last element in the Binary Heap. So in this case we
+ *     switch positions of the 1 and the 7. This is shown below:
+ *     
+ *                7
+ *               / \
+ *              5   12
+ *             / \  / \
+ *            8  6 13  1
+ *            
+ *     Now that we have the 1 in the insertion position, we can remove it. Our new Binary Heap is shown below:
+ *     
+ *                7
+ *               / \
+ *              5   12
+ *             / \  / \
+ *            8  6 13  
+ *            
+ *     Next, notice that the heap invariant is no longer satisfied because we are dealing with a Min Heap and the 7 is
+ *     larger than the 5. We now need to Bubble Down. Remember we Bubble Down into the smaller nodes so that's why we
+ *     bubble down to the 5 instead of the 12. When the nodes are the same, imagine it was 5 and 5, then we would
+ *     default with the left node. We switch the 5 and the 7 and our new heap is shown below:
+ *     
+ *                5
+ *               / \
+ *              7   12
+ *             / \  / \
+ *            8  6 13  
+ *            
+ *     We still aren't done. The 7 has a child node of 6, which is smaller so the heap invariant still is not satisfied.
+ *     We need to switch the 6 and the 7. This is shown below.
+ *     
+ *                5
+ *               / \
+ *              6   12
+ *             / \  / \
+ *            8  7 13  
+ *     
+ *     Next, we want to remove 7. Polling was removing the root, but here we are removing an element that is not the
+ *     root. So what do we do? We have to search for 7 even though we don't know its position yet. When we do this,
+ *     we start at the root, so in this case 5. Now we must do a linear scan through the Heap to find our element, in 
+ *     this case 7. When we eventually find the 7 we now must switch it with the element at the insertion point. 
+ *     Therefore, we switch the 7 and the 13. Our heap now looks like this:
+ *     
+ *                5
+ *               / \
+ *              6   12
+ *             / \  / \
+ *            8  13 7
+ *            
+ *     Now we can remove the 7 as shown below.
+ *     
+ *                5
+ *               / \
+ *              6   12
+ *             / \  / \
+ *            8  13 
+ *            
  */
 
 public class PriorityQueue 
