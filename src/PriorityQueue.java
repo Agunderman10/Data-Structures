@@ -482,24 +482,403 @@
  *                                                                          
  */
 
-public class PriorityQueue 
+import java.util.*;
+
+//Binary Heap implementation of a Min Priority Queue
+//note: elements we allow into the PQ have to be comparable elements
+public class PriorityQueue <T extends Comparable<T>>
 {
-
+	//the number of elements currently inside the heap
+	private int heapSize = 0;
+	
+	//the internal capacity of the heap, may be larger than heapSize
+	private int heapCapacity = 0;
+	
+	//a dynamic list to track the elements inside the heap(this is the actual heap)
+	private List<T> heap = null;
+	
+	//This map keeps track of the possible indices of a particular node value that is found in the heap. Having this
+	//mapping lets us have O(log(n)) removals and O(1) element containment check at the cost of some additional space
+	//and minor overhead
+	//Here we can map an element to a TreeSet of Integers. (All of the positions inside our heap)
+	private Map<T, TreeSet<Integer>> map = new HashMap<>();
+	
+	//Construct and initially empty our Priority Queue
+	public PriorityQueue()
+	{
+		this(1);
+	}
+	
+	//Construct a PQ with an initial capacity
+	public PriorityQueue(int size)
+	{
+		heap = new ArrayList<>(size);
+	}
+	
+	//Construct a PQ using heapify in O(n) time
+	//if you know all of the elements that are going to be inside your heap, you can actually construct the PQ in 
+	//linear time using heapify. We did not talk about this in the documentation, but it can be very, very, useful. 	
+	//a great explanation of this can be found here:
+	//http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf
+	public PriorityQueue(T[] elems)
+	{
+		heapSize = heapCapacity = elems.length;
+		heap = new ArrayList<T>(heapCapacity);
+		
+		//place all elements in heap
+		for(int i = 0; i < heapSize; i++)
+		{
+			mapAdd(elems[i], i);
+			heap.add(elems[i]);
+		}
+		
+		//heapify process, O(n)
+		for(int i = Math.max(0, (heapSize / 2)-1); i >= 0; i--)
+		{
+			sink(i);
+		}
+	}
+	
+	//PQ construction, O(nlog(n)), use heapify above whenever possible for speed
+	public PriorityQueue(Collection<T> elems)
+	{
+		this(elems.size());
+		for(T elem : elems)
+		{
+			add(elem);
+		}
+	}
+	
+	//returns true/false depending on if the PQ is empty
+	public boolean isEmpty()
+	{
+		return heapSize == 0;
+	}
+	
+	//clears everything inside the heap and hash map, O(n)
+	public void clear()
+	{
+		for(int i = 0; i < heapCapacity; i++)
+		{
+			heap.set(i, null);
+		}
+		heapSize = 0;
+		map.clear();
+	}
+	
+	//return the size of the heap
+	public int size()
+	{
+		return heapSize;
+	}
+	
+	//returns the value of the element with the lowest priority(since this is a Min Heap) in this PQ(return the root).
+	//If the PQ is empty null is returned
+	public T peek() 
+	{
+		if(isEmpty())
+		{
+			return null;
+		}
+		return heap.get(0);
+	}
+	
+	//removes the root of the heap, O(log(n))
+	public T poll()
+	{
+		return removeAt(0);
+	}
+	
+	//test if an element is in the heap, O(1)
+	public boolean contains(T elem) 
+	{
+		//map lookup to check containment, O(1)
+		if(elem == null)
+		{
+			return false;
+		}
+		//we can just lookup the value in the map, which is O(1)
+		return map.containsKey(elem);
+		
+		//if we did not use the map we would have to do a linear scan to check for containment, which is O(n).
+		/*
+		for(int i = 0; i < heapSize; i++)
+		{
+			if(heap.get(i).equals(elem)) 
+			{
+				return true;
+			}
+			return false;
+		}
+		*/
+		
+		//The map does add a lot of constant overhead which you may or may not want, people generally don't maintain
+		//the map, but I wanted to show that it could be done. People don't usually remove things from the maps much,
+		//so the hash map is generally considered unnecessary unless you are removing a LOT of values. 
+	}
+	
+	//adds an element to the PQ, the element must not be null, O(log(n))
+	public void add(T elem) 
+	{
+		//element can't be null
+		if(elem == null)
+		{
+			throw new IllegalArgumentException();
+		}
+		
+		//if there is room for the new element we can go ahead and add it, if not we need to expand the heap
+		if(heapSize < heapCapacity)
+		{
+			heap.set(heapSize, elem);
+		}
+		else 
+		{
+			heap.add(elem);
+			heapCapacity++;
+		}
+		
+		//add the new values to the map so we can track them
+		mapAdd(elem, heapSize);
+		
+		//swim the new node up to maintain the heap invariant
+		swim(heapSize);
+		heapSize++;
+	}
+	
+	//tests if the value of node i <= node j
+	//this method assumes i and j are valid indices, O(1)
+	//helper method that helps us check if node i is less than or equal to node j
+	private boolean less(int i, int j)
+	{
+		T node1 = heap.get(i);
+		T node2 = heap.get(j);
+		
+		//the two nodes are comparable so we can use the compareTo() method
+		//comes from the comparable interface we extended earlier
+		return node1.compareTo(node2) <= 0;
+	}
+	
+	//bottom up node swim, (log(n))
+	private void swim(int k)
+	{
+		//grab the index of the next parent node WRT to k
+		//remember we start our heap at 0
+		int parent = (k-1) / 2;
+		
+		//keep swimming while we have not reached the root and while we're less than our parent
+		while(k > 0 && less(k, parent))
+		{
+			//exchange k with the parent
+			swap(parent, k);
+			k = parent;
+			
+			//grab the index of the next parent node WRT to k
+			parent = (k-1) / 2;
+		}
+	}
+	
+	//top down node sink, O(log(n))
+	private void sink(int k)
+	{
+		while(true) 
+		{
+			//zero based formulas for our list
+			int left = 2 * k + 1; //left node
+			int right = 2 * k + 2; //right node
+			int smallest = left; // assume left is the smallest node of the two children
+			
+			//find which is smaller, left or right?
+			//if right is smallest set smallest to be right. 
+			if(right < heapSize && less(right, left))
+			{
+				smallest = right;
+			}
+			
+			//stop if we're outside the bounds of the tree
+			//or stop early if we cannot sink k anymore
+			if(left >= heapSize || less(k, smallest)) 
+			{
+				break;
+			}
+			
+			//move down the tree following the smallest node
+			swap(smallest, k);
+			k = smallest;
+		}
+	}
+	
+	//swap two nodes. Assume i and j are valid, O(1)
+	private void swap(int i, int j)
+	{
+		T i_elem = heap.get(i);
+		T j_elem = heap.get(j);
+		
+		heap.set(i, j_elem);
+		heap.set(j, i_elem);
+		
+		//this is what causes a lot of the overhead for the map. each time we call the swap method we also have to swap
+		//values inside the map which can be a lot of overhead. technically maps are constant lookup times, but the 
+		//fact that you're doing all of this internal hashing and collisions, etc, it can get costly.
+		mapSwap(i_elem, j_elem, i, j);
+	}
+	
+	//removes a particular element in the heap, O(log(n))
+	public boolean remove(T element)
+	{
+		//we know we don't have any null elements in our heap because we don't allow them.
+		if(element == null)
+		{
+			return false;
+		}
+		
+		//linear removal via search, O(n)
+		/*
+		for(int i = 0; i< heapSize; i++)
+		{
+			if(element.equals(heap.get(i)))
+			{
+				removeAt(i);
+				return true;
+			}
+		}
+		*/
+		//logarithmic removal with map, O(log(n))
+		Integer index = mapGet(element);
+		if(index != null) 
+		{
+			removeAt(index);
+		}
+		
+		return index != null;
+	}
+	
+	//Removes a node at  particular index, O(log(n))
+	private T removeAt(int i)
+	{
+		//if heap is empty, can't remove anything
+		if(isEmpty())
+		{
+			return null;
+		}
+		
+		heapSize--;
+		T removed_data = heap.get(i);
+		//swap index of what we want to remove with the last element
+		swap(i, heapSize);
+		
+		//kill off the node and remove it from our map
+		heap.set(heapSize, null);
+		mapRemove(removed_data, heapSize);
+		
+		//removed last element
+		if(i == heapSize)
+		{
+			return removed_data;
+		}
+		
+		T elem = heap.get(i);
+		
+		//try sinking element
+		sink(1);
+		
+		if(heap.get(i).equals(elem))
+		{
+			swim(i);
+		}
+		
+		return removed_data;
+	}
+	
+	//Recursively checks if this heap is a Min Heap, this method is just for testing purposes to make sure the heap
+	//invariant is still being maintained, called the method with k=0 to start at the root
+	public boolean isMinHeap(int k)
+	{
+		//if we are outside the bounds of the heap return true
+		if(k >= heapSize)
+		{
+			return true;
+		}
+		
+		//get our child nodes
+		int left = 2 * k + 1;
+		int right = 2 * k + 2;
+		
+		//make sure that the current node k is less than both of its children left, and right if they exist return 
+		//false otherwise to indicate an invalid heap
+		if(left < heapSize && !less(k,left)) 
+		{
+			return false;
+		}
+		if(right < heapSize && !less(k, right))
+		{
+			return false;
+		}
+		
+		//recurse on both children to make sure they're also valid heaps
+		return isMinHeap(left) && isMinHeap(right);
+	} 
+	
+	//add a node value and its index to the map
+	private void mapAdd(T value, int index)
+	{
+		//using a TreeSet to add and remove elements because we know the TreeSet implementation in java is a balanced
+		//binary search tree so all operations on TreeSets are logarithmic
+		TreeSet<Integer> set = map.get(value);
+		
+		//new value being inserted into map
+		if(set == null)
+		{
+			set = new TreeSet<>();
+			set.add(index);
+			map.put(value, set);
+		}
+		else 
+		{
+			set.add(index);
+		}
+	}
+	
+	//removes the index at a given value, O(log(n))
+	private void mapRemove(T value, int index)
+	{
+		TreeSet<Integer> set = map.get(value);
+		set.remove(index); //TreeSets take O(log(n)) removal time
+		if(set.size() == 0)
+		{
+			map.remove(value);
+		}
+	}
+	
+	//extract an index position for the given value. Note: if a value exists multiple times in the heap the highest 
+	//index is returned(this has been arbitrarily chosen)
+	private Integer mapGet(T value)
+	{
+		TreeSet<Integer> set = map.get(value);
+		if(set != null)
+		{
+			return set.last();
+		}
+		
+		return null;
+	}
+	
+	//exchange the index of two nodes internally within the map
+	private void mapSwap(T val1, T val2, int val1Index, int val2Index)
+	{
+		Set<Integer> set1 = map.get(val1);
+		Set<Integer> set2 = map.get(val2);
+		
+		set1.remove(val1Index);
+		set2.remove(val2Index);
+		
+		set1.add(val2Index);
+		set2.add(val1Index);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return heap.toString();
+	}
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
