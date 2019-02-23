@@ -1,4 +1,5 @@
 
-public class UnionFind {
+public class UnionFind 
+{
 
 }
