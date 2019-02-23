@@ -23,6 +23,16 @@
  *     
  *     Image Processing
  * 
+ * Union Find Time Complexity
+ * 
+ *     Construction: O(n) linear time.
+ *     Union: a(n) amortized constant time.
+ *     Find: a(n) amortized constant time.
+ *     Get Component Size: a(n) amortized constant time.
+ *     Check if Connected: a(n) amortized constant time.
+ *     Count Components: O(1) constant time.
+ *     
+ *     Amortized constant time- almost constant time, but not quite constant time. 
  */
 
 public class UnionFind 
