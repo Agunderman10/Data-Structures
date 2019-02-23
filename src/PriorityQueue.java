@@ -402,8 +402,84 @@
  *                                                /                          /
  *                                               3                          7
  *                                               
- *     Now that the 3 is inserted, we need to make sure that the heap invariant is satisfied. Notice that we are 
- *     dealing with a Min Heap. 
+ *     Now that the 3 is inserted, we need to make sure that the heap invariant is satisfied. Currently it is not. 
+ *     Notice that we are dealing with a Min Heap. Since it is not, we need to bubble up the 3. We switch the 3 and 
+ *     the 11. The heap invariant is still not satisfied because 3 is still a child of 7, which is larger. As a result,
+ *     we must bubble up the 3 again and switch the 3 and the 7. Our heap invariant is now satisfied because the root,
+ *     2, is smaller than its child of 3. Remember, when we switch the nodes in the heap we must also switch the values
+ *     in the hash table so we can continue to track them. The 3 has been inserted successfully, this is shown below:
+ *     
+ *                OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                 0,2,6       |           2                          0
+ *     |     7                  3,4        |          / \                        / \ 
+ *     |     11                  7         |         3   2                      1   2
+ *     |     13                  5         |        / \ / \                    / \ / \ 
+ *     |     3                   1         |       7  7 13 2                  3  4 5  6
+ *                                                /                          /
+ *                                               11                         7
+ *                                               
+ *     Our next instruction is to remove 2 from the heap. So which 2 should we remove? Remember, we have 3 of them.
+ *     Well, as said before, it doesn't matter which 2 that we remove as long as we satisfy the heap invariant in the 
+ *     end. We need to think in terms of simplicity. If we remove the last 2 we can immediately satisfy the heap 
+ *     invariant with one swap, but for learning purposes we will remove the first 2 that we come to, which in this 
+ *     case shows up at index 0, the root. When we remove items from a Binary Heap with a Hash Table we do not have to
+ *     use a linear scan to find the desired element. This is good because we can just do a lookup in the Hash Table,
+ *     saving us valuable time. Remember, we swap the element we want to remove with the last element in the tree, in
+ *     this case we swap the root and the last element. So, 2 now becomes the last element and the 11 becomes the root.
+ *     We then can remove the last node. Don't forget to update the Hash Table values while we do this. We now have the
+ *     following Heap and Hash Table. 
+ *     
+ *                 OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                  2,6        |          11                          0
+ *     |     7                  3,4        |          / \                        / \ 
+ *     |     11                  0         |         3   2                      1   2
+ *     |     13                  5         |        / \ / \                    / \ / \ 
+ *     |     3                   1         |       7  7 13 2                  3  4 5  6
+ *                                                                           
+ *     At this point we have successfully removed the 2, but the heap invariant is not satisfied because our root has
+ *     a child that is smaller than itself and this is a Min Heap. So what do we need to do? We need to bubble the 11 
+ *     down. We bubble the 11 down, remember we bubble it down to the smaller child's side, so we bubble our 11 down to
+ *     the 2 which is 11's right child. The heap invariant is still not satisfied because the 11 still has a child 
+ *     which is smaller than itself. Ergo, we bubble the 11 down once again in the position of the 2. Our heap
+ *     invariant is now satisfied and we have successfully removed the 2. Don't forget the change the values in the
+ *     Hash Table. You should have the following Heap and Hash Table. 
+ *     
+ *                OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                  0,2        |           2                          0
+ *     |     7                  3,4        |          / \                        / \ 
+ *     |     11                  6         |         3   2                      1   2
+ *     |     13                  5         |        / \ / \                    / \ / \ 
+ *     |     3                   1         |       7  7 13 11                 3  4 5  6
+ *     
+ *     Now, let's say we wish to call the poll() method and remove the root. What do we do? We do the same thing we've
+ *     been doing when we remove elements. We switch the root, in this case, and the last element, or 11. Your new 
+ *     Heap and Hash Table should look like this:
+ *     
+ *                OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                  2,6        |           11                         0
+ *     |     7                  3,4        |          / \                        / \ 
+ *     |     11                  0         |         3   2                      1   2
+ *     |     13                  5         |        / \ / \                    / \ / \ 
+ *     |     3                   1         |       7  7 13 2                  3  4 5  6
+ *     
+ *     We then can remove the 2 from the Heap. We also now need to satisfy the Heap invariant because we upset it by
+ *     switching the last element to the root of the heap. The 11 has two children, 2 and 3. 2 is smaller so it is the
+ *     child node that we are going to swap the 11 with. Swap the 11 and the 2. The heap invariant is still not 
+ *     satisfied so we need to swap the 11 with its smallest child node. In this case, that is 2 again. We swap the
+ *     two nodes, and now our heap invariant is satisfied. Your Heap and Hash Table should look like this:
+ *     
+ *                OUR HASHTABLE
+ *     |Node Value(Key)  Position(s)(Value)|       Our Heap                  Index Tree
+ *     |     2                  0,2        |           2                          0
+ *     |     7                  3,4        |          / \                        / \ 
+ *     |     11                  6         |         3   2                      1   2
+ *     |     13                  5         |        / \ / \                    / \ / \ 
+ *     |     3                   1         |       7  7 13 11                 3  4 5  6
+ *                                                                          
  */
 
 public class PriorityQueue 
