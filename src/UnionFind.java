@@ -33,9 +33,44 @@
  *     Count Components: O(1) constant time.
  *     
  *     Amortized constant time - almost constant time, but not quite constant time. 
+ *     
+ * Kruskal's Minimum Spanning Tree Algorithm and Union Find
+ * 
+ *     Given a graph G = (V,E) we want to find a Minimum Spanning Tree in the graph(it may not be unique). A Minimum
+ *     Spanning Tree is a subset of the edges which connect all vertices in the graph with the minimal total edge cost.
+ *     
+ *     So if we're given a graph with some vertices and some edges, the minimum spanning tree is a subset of the edges 
+ *     which connects to all of the vertices and does so at a minimal cost. 
+ *     
+ *     I will not explain Minimum Spanning Trees here because they would be difficult to draw so it may be a good idea
+ *     to stop here and learn those before continuing. 
+ *     
+ *     Note: a Minimum Spanning Tree is not necessarily unique, so if there is another Minimum Spanning Tree it may 
+ *     also have the same weight as the first tree. 
+ *     
+ *     So, how does it work? We can break it up into 3 steps:
+ *     1. Sort edges by ascending edge weight.
+ *     2. Walk through the sorted edges and look at the two nodes the edge belongs to, if the nodes are already unified
+ *     we don't include this edge(doing so would create a cycle which we don't want), otherwise we include it and 
+ *     unify the nodes.
+ *     3. The algorithm terminates when every edge has been processed or all the vertices have been unified. 
+ *     
+ *     The Union operation is used to merge different groups in a Minimum Spanning Tree and the Find operation is used
+ *     to find what group different nodes in the tree belong to. These are very important to ensure that we don't
+ *     create a cycle.
+ *     
+ *     The underlying data structure that allows us to find a Minimum Spanning Tree in this way is Union Find.
  */
 
 public class UnionFind 
 {
 	
 }
+
+
+
+
+
+
+
+
