@@ -201,6 +201,33 @@
  *     Our current version of Union Find does not support the nice a(n) (Amortized constant) time complexity we want
  *     without path compression, which we will look at soon. Checking if two child nodes in two different components 
  *     belong to the same group takes multiple hops over different nodes.
+ *     
+ * Path Compression with Union Find
+ * 
+ *     This operation is really what makes the Union Find such a remarkable data structure. This is how Union Find gets
+ *     its efficiency. 
+ *     
+ *     Let's say we have the following two groups and we want to union C and G. Normally, we would simply Union D and 
+ *     H because they are the roots of the two groups and we'd be done, but that is not what we are going to do. 
+ *     
+ *     A-D  H-E
+ *     |      |
+ *     B      F
+ *     |      |
+ *     C      G
+ *     
+ *     Instead, what we are going to do is make all of the pointers of our path to the root point to the root. So, 
+ *     while we are trying to find the root, we move from C to B to A until we finally reach D, the root. After we do
+ *     this we now want to make all of those node's pointers on that path point to the root. So, C now points D, B
+ *     points to D, and A points to D. When we do this on the other group G now points to H, F points to H, and E
+ *     points to H. We can now Union the two roots, D and H. Our resulting group looks like this:
+ *     
+ *     A-D---H-E
+ *      / \ / \
+ *     B  C F  G
+ *     
+ *     Path compression "compresses" the path and allows us to perform less operations for the same amount of tasks. 
+ *     As the path compresses, we get closer and closer to constant time. 
  */
 
 public class UnionFind 
