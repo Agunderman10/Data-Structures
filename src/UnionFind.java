@@ -60,6 +60,126 @@
  *     create a cycle.
  *     
  *     The underlying data structure that allows us to find a Minimum Spanning Tree in this way is Union Find.
+ *     
+ * Union Find and Operations
+ * 
+ *     Now we're going to talk about the Union and Find operations we can do on the Union Find, or the disjoint set. 
+ *     To begin using Union Find, first construct a bijection(a mapping) between your objects and the integers in the 
+ *     range [0, n).
+ *     
+ *     Note: this step is not necessary in general, but it will allow us to construct an array-based Union Find which 
+ *     is very efficient and very easy to work with. I will show what this means below:
+ *     
+ *     D    B          F
+ *       A     E    C
+ *       
+ *     0 1 2 3 4 5
+ *     
+ *     So if we have some random objects, the letters above, and we want to assign a mapping to them, then we can do so
+ *     arbitrarily as long as each element maps to exactly one number. Our random bijection is shown below:
+ *     
+ *     0 1 2 3 4 5
+ *     ^ ^ ^ ^ ^ ^
+ *     D A B E C F
+ *     
+ *     This is our random bijection. We want to store these mappings, perhaps, in a hash table so we can perform a 
+ *     lookup on them later and determine what everything is mapped to. Next, we are going to construct and array. Each
+ *     index is going to have an associated object - this is possible through our bijection(mapping). For example, 
+ *     in our bijection D was mapped to 0, A was mapped to 1, and so on so forth. This array is shown below:
+ *     
+ *     indexes  0 1 2 3 4 5
+ *     elements D A B E C F
+ *     
+ *     Now we begin our Union example, note: this example will not use path compression, see the following:
+ *     
+ *     elements D A B E C F
+ *     value    0 1 2 3 4 5 (or root nodes)
+ *     indexes  0 1 2 3 4 5
+ *     
+ *     Notice our array. The value of each element in the array is its index because originally each node is its own
+ *     root node. Picture a bunch of nodes that are unconnected, each node would be its own tree, and therefore its
+ *     own root. As we Union nodes you will notice that we are going to change the values in our array to map to other
+ *     letters. Specifically, the way we are going to do this is: for some index i, index i's parent is going to be 
+ *     whatever index is at position i. For instance, if we want to unify D and F, so Union(D, F), we look at D and F,
+ *     and we discover that D has a root node of 0, and F has a root node of 5. So either D is going to become F's
+ *     parent or F is going to become D's parent. In this case we will choose D for the parent. We will now switch 
+ *     the value of F to be the same value of D, or the same root node. So, F's value now becomes 0. This is shown 
+ *     below. 
+ *     
+ *     elements D A B E C F
+ *     value    0 1 2 3 4 0 (or root nodes)
+ *     indexes  0 1 2 3 4 5
+ *     
+ *     Since D is now F's parent you can visualize what we are doing here by looking at the visual below:
+ *     
+ *     D
+ *     ^
+ *     F
+ *     
+ *     D becomes the parent of F, and F becomes the child node of D. If we want to Union A and C now, so Union(A, C),
+ *     we will once again switch the values to match. In this example I am going to choose the smallest value to be 
+ *     the parent every time. So, our A becomes the parent of C. We switch C's value to match A, so C's value becomes
+ *     1. This is shown below:
+ *     
+ *     elements D A B E C F
+ *     value    0 1 2 3 1 0 (or root nodes)
+ *     indexes  0 1 2 3 4 5
+ *     
+ *     And our visual is shown below:
+ *     
+ *     D A
+ *     ^ ^
+ *     F C
+ *     
+ *     Now we want to Union B and E, so Union(B, E). Once again, I will choose the smallest index to be the parent, so
+ *     B becomes E's parent. E's new value becomes 2. This is shown below:
+ *     
+ *     elements D A B E C F
+ *     value    0 1 2 2 1 0 (or root nodes)
+ *     indexes  0 1 2 3 4 5
+ *     
+ *     And our visual is shown here:
+ *     
+ *     D A B
+ *     ^ ^ ^
+ *     F C E
+ *     
+ *     Let's say we have another node in the mix that we want to Union. We have G, and we want to Union with E. So this
+ *     is Union(G, E). Notice that E's value is 2, but we know that B is also 2 since B is the root node of E. When
+ *     we merge groups we always merge the smaller groups into larger groups. So, our G merges into our B & E group.
+ *     The G becomes the child of B, because B is the parent node, instead of E. This is shown below:
+ *     
+ *     elements D A B E C F G
+ *     value    0 1 2 2 1 0 2 (or root nodes)
+ *     indexes  0 1 2 3 4 5 6
+ *     
+ *     And our visual is shown below:
+ *     
+ *     D A   B
+ *     ^ ^  / \
+ *     F C E   G
+ *     
+ *     Let's say we want to merge two groups instead of just individual nodes, how do we do this? This is very similar
+ *     to how we've merged individual nodes. We want to union C and B, so Union(C, B). C's root node is A with value
+ *     1, and B is its own root. B's tree has 3 nodes and A's tree has only 2 nodes, therefore, we are going to be 
+ *     merging A's tree into B's tree. Once again, the root of C's tree will merge with the root of B's tree, so A
+ *     merges with B and the entire tree now has a value of 2. This is shown below:
+ *     
+ *     elements D A B E C F G
+ *     value    0 2 2 2 2 0 2 (or root nodes)
+ *     indexes  0 1 2 3 4 5 6
+ *     
+ *     And our visual is shown below:
+ *     
+ *     D    B
+ *     ^   /|\
+ *     F  E A G
+ *          |
+ *          C
+ *     (This example does not use path compression)
+ *     
+ *     We also could merge the two remaining trees, but I am not going to cover that because you would simply need to
+ *     merge D's tree into B's tree and you're done. 
  */
 
 public class UnionFind 
