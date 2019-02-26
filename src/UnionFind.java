@@ -180,6 +180,15 @@
  *     
  *     We also could merge the two remaining trees, but I am not going to cover that because you would simply need to
  *     merge D's tree into B's tree and you're done. 
+ * 
+ * Summary
+ * 
+ *     Find Operation- To find which component a particular element belongs to find the root of that component by
+ *     following the parent nodes until a self loop is reached(a node who's parent is itself), basically until we find
+ *     the root of that component.
+ *     
+ *     Union Operation- To unify two elements find which are the root nodes of each component and if the root nodes
+ *     are different make one of the root nodes be the parent of the other. 
  */
 
 public class UnionFind 
