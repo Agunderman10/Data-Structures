@@ -47,12 +47,12 @@
  *     
  * Is this a valid BST?
  * 
- *     3
- *    / \
- *    3 4
+ *      3
+ *     / \
+ *     3 4
  *    
- *    It depends on whether you want to allow duplicate values in your tree. BST operations allow for duplicate values,
- *    but most of the time we are only interested in having unique elements inside our tree.
+ *     It depends on whether you want to allow duplicate values in your tree. BST operations allow for duplicate values,
+ *     but most of the time we are only interested in having unique elements inside our tree.
  *    
  *            5
  *           / \
@@ -60,8 +60,8 @@
  *         /   / \
  *        3   6   8
  *        
- *    Yes. The values smaller than the current node are the left children and the nodes larger than the current node
- *    are the right children.
+ *     Yes. The values smaller than the current node are the left children and the nodes larger than the current node
+ *     are the right children.
  *    
  *            D
  *           / \
@@ -69,7 +69,8 @@
  *         /   / \
  *        A   X   Z
  *        
- *    Yes. We are not limited to only using numbers. Any data that can be ordered can be place inside a BST. 
+ *     Yes. We are not limited to only using numbers. Any data that can be ordered can be place inside a BST. 
+ *    
  *    
  */
 
