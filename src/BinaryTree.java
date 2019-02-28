@@ -71,7 +71,27 @@
  *        
  *     Yes. We are not limited to only using numbers. Any data that can be ordered can be place inside a BST. 
  *    
- *    
+ * When and Where are Binary Search Trees used?
+ * 
+ *     Implementation of some map and set ADTs(Abstract Data Types)
+ *     
+ *     Balanced Binary Search Trees
+ *     
+ *     Red Black Trees
+ *     
+ *     AVL Trees
+ *     
+ *     Splay Trees
+ *     
+ *     etc...
+ *     
+ *     Used in implementation of Binary Heaps
+ *     
+ *     Syntax trees (used by compiler and calculators)- parsing an arithmetic expression and you place it in an abstract
+ *     syntax tree and then you can simplify your expression. So whatever you punch into your calculator gets parsed
+ *     into a binary tree and evaluated.
+ *     
+ *     Treap - a probabilistic data structure (uses a random BST)
  */
 
 public class BinaryTree 
