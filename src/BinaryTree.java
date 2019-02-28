@@ -92,6 +92,16 @@
  *     into a binary tree and evaluated.
  *     
  *     Treap - a probabilistic data structure (uses a random BST)
+ *     
+ * Time Complexity of BSTs
+ * 
+ *     Operation    Average    Worst
+ *     Insert      O(log(n))   O(n)
+ *     Delete      O(log(n))   O(n)
+ *     Remove      O(log(n))   O(n)
+ *     Search      O(log(n))   O(n)
+ *                logarithmic linear
+ *     
  */
 
 public class BinaryTree 
