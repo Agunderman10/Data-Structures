@@ -230,9 +230,123 @@
  *     As the path compresses, we get closer and closer to constant time. 
  */
 
+//could also have a node based UnionFind with node objects, but array based is much cleaner
 public class UnionFind 
 {
+	//the number of elements in the union find
+	private int size;
 	
+	//tracks size of each component
+	private int[] sz;
+	
+	//id[i] points to the parent of i, if id[i] = i then i is a root node
+	//basically, if i's parent is itself, then it is a root node
+	private int[] id;
+	
+	//tracks number of components in the union find
+	private int numComponents;
+	
+	//need to know how many elements are in the union find at initialization
+	public UnionFind(int size) 
+	{
+		//can't have an empty union find
+		if(size <= 0)
+		{
+			throw new IllegalArgumentException("Size <= 0 is not allowed.");
+		}
+		
+		this.size = numComponents = size;
+		sz = new int[size];
+		id = new int[size];
+		
+		for(int i = 0; i < size; i++)
+		{
+			id[i] = i; //link to itself(self root)
+			sz[i] = 1; //each component is originally of size one
+		}
+	}
+	
+	//find which component/set 'p' belongs to, takes amortized constant time
+	public int find(int p) 
+	{
+		//find the root of the component/set
+		int root = p;
+		//loop until we find desired self loop, or root, or node that points at itself, whose parent is itself
+		while(root != id[root])
+		{
+			root = id[root];
+		}
+		
+		//compress the path leading back to the root
+		//this is path compression
+		//it is what gives us amortized constant time complexity
+		//point all nodes along the path to the root, at the root
+		//could also do this recursively but I don't want the overhead and doing things iteratively can be slightly
+		//faster
+		while(p != root)
+		{
+			int next = id[p];
+			id[p] = root;
+			p = next;
+		}
+		
+		return root;
+	}
+	
+	//return whether or not the elements 'p' and 'q' are in the same components/set
+	public boolean connected(int p, int q) 
+	{
+		return find(p) == find(q);
+	}
+	
+	//returns the size of the components/set 'p' belongs to
+	public int componentSize(int p)
+	{
+		return sz[find(p)];
+	}
+	
+	//return the number of elements in this UnionFind/disjoint set
+	public int size()
+	{
+		return size;
+	}
+	
+	//returns the number of remaining components/sets
+	public int components()
+	{
+		return numComponents;
+	}
+	
+	//unify the components/sets  containing elements 'p' and 'q'
+	public void unify(int p, int q)
+	{
+		//find the root of each component
+		int root1 = find(q);
+		int root2 = find(q);
+		
+		//if these elements are already in the same group we don't need to unify anything
+		if(root1 == root2)
+		{
+			return;
+		}
+		
+		//merge two components/sets together
+		//merge smaller component/set into the larger one
+		if(sz[root1] < sz[root2])
+		{
+			sz[root2] += sz[root1];
+			id[root1] = root2;
+		}
+		else
+		{
+			sz[root1] += sz[root2];
+			id[root2] = root1;
+		}
+		
+		//since the roots we found are different we know that the number of components/sets will decrease by 1 when
+		//we merge
+		numComponents--;
+	}
 }
 
 
