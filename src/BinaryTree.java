@@ -322,8 +322,317 @@
  *     
  */
 
-// this binary tree is a binary search tree
-public class BinaryTree 
+// this binary tree is a generic type binary search tree
+// notes how this binary search tree takes any type that is comparable
+// we need comparable types so we know how to insert them into the BST accordingly
+public class BinaryTree <T extends Comparable<T>>
 {
-
+	// tracks the number of nodes in this BST
+    private int nodeCount = 0;
+    
+    // this BST is a rooted tree so we maintain a handle on the root node
+    private Node root = null;
+    
+    // internal node containing node references
+    // and the actual node data
+    private class Node
+    {
+    	T data; // some comparable type T
+    	Node left, right;
+    	public Node(Node left, Node right, T elem)
+    	{
+    		this.data = elem;
+    		this.left = left;
+    		this.right = right;
+    	}
+    }
+    
+    // check if this binary tree is empty
+    public boolean isEmpty()
+    {
+    	return size() == 0;
+    }
+    
+    // get number of nodes in this binary search tree
+    public int size()
+    {
+    	// this will be incremented or decremented as we add or remove elements
+    	return nodeCount;
+    }
+    
+    // add an element to this binary tree. returns true if we successfully perform an insertion
+    public boolean add(T elem)
+    {
+    	// check if the value already exists in this BST, if it does ignore adding it
+    	if(contains(elem))
+    	{
+    		return false;
+    	}
+    	else
+    	{
+    		root = add(root, elem);
+    		nodeCount++;
+    		return true;
+    	}
+    }
+    
+    // private method to recursively add a value in the binary tree
+    private Node add(Node node, T elem)
+    {
+    	// base case: found a leaf node
+    	if(node == null)
+    	{
+    		node = new Node(null, null, elem);
+    	}
+    	else
+    	{
+    		//place lower elements values in left subtree
+    		if(elem.compareTo(node.data) < 0)
+    		{
+    			node.left = add(node.left, elem);
+    		}
+    		else
+    		{
+    			node.right = add(node.right, elem);
+    		}
+    	}
+    	return node;
+    }
+    
+    // remove a value from this binary tree, if it exists
+    public boolean remove(T elem)
+    {
+    	// make sure the node we want to remove actually exists before we remove it
+    	if(contains(elem))
+    	{
+    		root = remove(root, elem);
+    		nodeCount--;
+    		return true;
+    	}
+    	return false;
+    }
+    
+    // recursive method to remove node
+    private Node remove(Node node, T elem)
+    {
+    	if(node == null)
+    	{
+    		return null;
+    	}
+    	
+    	int cmp = elem.compareTo(node.data);
+    	
+    	// dig into left subtree, the value we're looking for is smaller than the current value
+    	if(cmp < 0)
+    	{
+    		node.left = remove(node.left, elem);
+    	}
+    	// dig into right subtree, the value we're looking for is greater than the current value
+    	else if(cmp > 0)
+    	{
+    		node.right = remove(node.right, elem);
+    	}
+    	// found the node we wish to remove
+    	else 
+    	{
+    		// this is the case with only a right subtree or no subtree at all. in this situation just
+    		// swap the node we wish to remove with its original child.
+    		if(node.left == null)
+    		{
+    			Node rightChild = node.right;
+    			
+    			node.data = null;
+    			node = null;
+    			
+    			return rightChild;
+    			
+    			// this is the case with only a left subtree or no subtree at all. in this situation we
+    			// just swap the node we wish to remove with its left child
+    		}
+    		else if(node.right == null)
+    		{
+    			Node leftChild = node.left;
+    			node.data = null;
+    			node = null;
+    			
+    			return leftChild;
+    			
+    			// when removing a node from a binary search tree with two links the successor of the node
+    			// being removed can either be the largest value in the left subtree or the smallest value
+    			// in the right subtree. in this implementation we have decided to find the smallest value
+    			// in the right subtree which can be found by traversing as far left as possible in the 
+    			// right subtree.
+    		}
+    		else
+    		{
+    			// find leftmost node in the right subtree
+    			Node tmp = digLeft(node.right);
+    			
+    			// swap the data
+    			node.data = tmp.data;
+    			
+    			// go into the right subtree and remove the leftmost node we found and swapped data with.
+    			// this prevents us from having two nodes in our tree with the same value
+    			node.right = remove(node.right, tmp.data);
+    			
+    			// if instead we wanted to find the largest node in the left subtree as opposed to the
+    			// smallest node in the right subtree here is what we could do:
+    			// Node tmp = digRight(node.left);
+    			// node.data = tmp.data;
+    			// node.left = remove(node.left, tmp.data);
+    		}
+    	}
+    	return node;
+    }
+    
+    // helper method to find the leftmost node
+    private Node digLeft(Node node)
+    {
+    	Node cur = node;
+    	while(cur.left != null)
+    	{
+    		cur = cur.left;
+    	}
+    	return cur;
+    }
+    
+    // helper method to find the rightmost node
+    private Node digRight(Node node)
+    {
+    	Node cur = node;
+    	while(cur.right != null)
+    	{
+    		cur = cur.right;
+    	}
+    	return cur;
+    }
+    
+    // returns true if the element exists in the tree
+    public bool contains(T elem)
+    {
+    	return contains(root, elem);
+    }
+    
+    // private recursive method to find an element in the tree
+    private boolean contains(Node node, T elem)
+    {
+    	// base case: reached bottom, value not found
+    	if(node == null)
+    	{
+    		return false;
+    	}
+    	
+    	int cmp = elem.compareTo(node.data);
+    	
+    	// dig into the left subtree because the value we're looking for is smaller than the current value
+    	if(cmp < 0)
+    	{
+    		return contains(node.left, elem);
+    	}
+    	// dig into the right subtree because the value we're looking for is greater than the current value
+    	else if(cmp > 0)
+    	{
+    		return contains(node.right, elem);
+    	}
+    	// we found the value we were looking for
+    	else 
+    	{
+    		return true;
+    	}
+    }
+    
+    // computes the height of the tree, O(n)
+    public int height()
+    {
+    	return height(root);
+    }
+    
+    // recursive helper method to compute the height of the tree
+    private int height(Node node)
+    {
+    	// if we reach a leaf node, return 0
+    	if(node == null)
+    	{
+    		return 0;
+    	}
+    	
+    	// otherwise return the maximum height of the left or right subtree. we do either left or right 
+    	// because either the left or the right subtree could be taller than the other.
+    	return Math.max(height(node.left), height(node.right)) + 1;
+    }
+    
+    // this method returns an iterator for a given TreeTraversalOrder.
+    // you can traverse the tree in 4 different ways: preorder, inorder, postorder, and levelorder
+    public java.util.Iterator <T> traverse(TreeTraversalOrder order)
+    {
+    	switch(order)
+    	{
+    	case PRE_ORDER:
+    		return preOrderTraversal();
+    	case IN_ORDER: 
+    		return inOrderTraversal();
+    	case POST_ORDER:
+    		return postOrderTraversal();
+    	case LEVEL_ORDER:
+    		return levelOrderTraversal();
+    		default: 
+    			return null;
+    	}
+    }
+    
+    // return as iterator to traverse the tree in preorder
+    private java.util.Iterator <T> preOrderTraversal() 
+    {
+    	// code
+    	return null;
+    }
+    
+    // return as iterator to traverse the tree in order
+    private java.util.Iterator <T> inOrderTraversal() 
+    {
+    	// code
+    	return null;
+    }
+    
+    // return as iterator to traverse the tree in post order
+    private java.util.Iterator <T> postOrderTraversal() 
+    {
+    	// code
+    	return null;
+    }
+    
+    // return as iterator to traverse the tree in level order
+    private java.util.Iterator <T> levelOrderTraversal() 
+    {
+    	// code
+    	return null;
+    }
+    
+    private enum TreeTraversalOrder
+    {
+    	PRE_ORDER,
+    	IN_ORDER,
+    	POST_ORDER,
+    	LEVEL_ORDER
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
